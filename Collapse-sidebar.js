@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Collapsible Sidebar Acdemic Websites
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/henflower/Sci-scripts/blob/main/Collapse-sidebar.js
 // @version      0.2
 // @description  Make elements on multiple websites collapsible
 // @author       Henflower
