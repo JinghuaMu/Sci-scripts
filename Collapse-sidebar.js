@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Collapsible Sidebar Acdemic Websites
+// @name         Collapse Sidebar in Acdemic Websites
 // @namespace    https://github.com/henflower/Sci-scripts/blob/main/Collapse-sidebar.js
-// @version      0.2
+// @version      0.21
 // @description  Make elements on multiple websites collapsible
 // @author       Henflower
 // @match        *://www.nature.com/articles/*
