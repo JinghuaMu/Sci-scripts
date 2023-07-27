@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Collapse Sidebar in Academic Websites
 // @namespace    https://github.com/henflower/Sci-scripts/blob/main/Collapse-sidebar.js
-// @version      0.21
+// @version      0.22
 // @description  Make elements on multiple websites collapsible
 // @author       Henflower
 // @match        *://www.nature.com/articles/*
