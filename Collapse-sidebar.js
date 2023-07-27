@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Collapse Sidebar in Acdemic Websites
+// @name         Collapse Sidebar in Academic Websites
 // @namespace    https://github.com/henflower/Sci-scripts/blob/main/Collapse-sidebar.js
 // @version      0.21
 // @description  Make elements on multiple websites collapsible
@@ -8,11 +8,28 @@
 // @match        *://www.sciencedirect.com/*
 // @match        *://www.ncbi.nlm.nih.gov/pmc/articles/*
 // @match        *://www.science.org/doi/*
+// @match        *://academic.oup.com/*
 // @grant        none
 // ==/UserScript==
 
 (function() {
     'use strict';
+
+    const style = document.createElement('style');
+    style.textContent = `
+        .collapsible-button {
+            position: fixed !important;
+            top: 10px !important;
+            right: 10px !important;
+            z-index: 9999 !important;
+            width: 25px !important;
+            height: 25px !important;
+            border-radius: 50% !important;
+            opacity: 0.8 !important;
+            text-align: center !important;
+        }
+    `;
+    document.head.appendChild(style);
 
     const collapsibleElements = [
         {
@@ -29,6 +46,11 @@
             hostname: 'ncbi.nlm.nih.gov',
             selector: '.pmc-sidebar, .usa-nav',
             articleSelector: '.pmc-article'
+        },
+        {
+            hostname: 'academic.oup.com',
+            selector: '.page-column--left, .page-column--right',
+            articleSelector: '.page-column--center'
         }
         /*
         ,{
@@ -42,15 +64,7 @@
     function addCollapsibleButton(element, article) {
         const button = document.createElement('button');
         button.innerText = '-';
-        button.style.position = 'fixed';
-        button.style.top = '10px';
-        button.style.right = '10px';
-        button.style.zIndex = 9999;
-        button.style.width = '25px';
-        button.style.height = '25px';
-        button.style.borderRadius = '50%';
-        button.style.opacity = '0.8';
-        button.style.textAlign = 'center';
+        button.classList.add('collapsible-button');
         button.addEventListener('click', () => {
             if (element.style.display === 'none') {
                 element.style.display = 'block';
