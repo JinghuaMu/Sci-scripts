@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Collapse Sidebar in Academic Websites
 // @namespace    https://github.com/henflower/Sci-scripts/blob/main/Collapse-sidebar.js
-// @version      0.22
+// @version      0.21
 // @description  Make elements on multiple websites collapsible
 // @author       Henflower
 // @match        *://www.nature.com/articles/*
@@ -9,6 +9,7 @@
 // @match        *://www.ncbi.nlm.nih.gov/pmc/articles/*
 // @match        *://www.science.org/doi/*
 // @match        *://academic.oup.com/*
+// @match        *://onlinelibrary.wiley.com/doi/*
 // @grant        none
 // ==/UserScript==
 
@@ -51,6 +52,11 @@
             hostname: 'academic.oup.com',
             selector: '.page-column--left, .page-column--right',
             articleSelector: '.page-column--center'
+        },
+        {
+            hostname: 'onlinelibrary.wiley.com',
+            selector: '.article-row-right',
+            articleSelector: '.article-row-left'
         }
         /*
         ,{
