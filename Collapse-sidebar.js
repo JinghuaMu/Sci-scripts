@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Collapse Sidebar in Academic Websites
 // @namespace    https://github.com/henflower/Sci-scripts/blob/main/Collapse-sidebar.js
-// @version      0.22
+// @version      0.25
 // @description  Make elements on multiple websites collapsible
 // @author       Henflower
 // @match        *://www.nature.com/articles/*
@@ -10,12 +10,14 @@
 // @match        *://www.science.org/doi/*
 // @match        *://academic.oup.com/*
 // @match        *://onlinelibrary.wiley.com/doi/*
+// @match        *://*.biomedcentral.com/articles/*
 // @grant        none
 // ==/UserScript==
 
 (function() {
     'use strict';
 
+    // Create a style element to hold CSS for the collapsible button
     const style = document.createElement('style');
     style.textContent = `
         .collapsible-button {
@@ -30,8 +32,10 @@
             text-align: center !important;
         }
     `;
+    // Append the style element to the document head
     document.head.appendChild(style);
 
+    // Define the elements that should be collapsible on each website
     const collapsibleElements = [
         {
             hostname: 'nature.com',
@@ -40,8 +44,8 @@
         },
         {
             hostname: 'sciencedirect.com',
-            selector: '.RelatedContent, .TableOfContents.text-s',
-            articleSelector: '.col-lg-12.col-md-16.pad-left.pad-right.u-padding-s-top'
+            selector: '.u-show-from-lg, .u-show-from-md',
+            articleSelector: '.col-lg-12, .row>.col-lg-12'
         },
         {
             hostname: 'ncbi.nlm.nih.gov',
@@ -57,38 +61,48 @@
             hostname: 'onlinelibrary.wiley.com',
             selector: '.article-row-right',
             articleSelector: '.article-row-left'
+        },
+        {
+            hostname: 'biomedcentral.com',
+            selector: '.c-article-extras',
+            articleSelector: '.c-article-main-column'
         }
-        /*
-        ,{
-            hostname: 'science.org',
-            selector: '.article__aside',
-            articleSelector: '.article__body'
-        }
-        */
+        // Additional websites can be added here
     ];
 
+    // Function to add a collapsible button to the specified elements
     function addCollapsibleButton(element, article) {
+        // Create a button element
         const button = document.createElement('button');
         button.innerText = '-';
         button.classList.add('collapsible-button');
+        // Add a click event listener to toggle the display of the sidebar
         button.addEventListener('click', () => {
             if (element.style.display === 'none') {
+                // If the sidebar is hidden, show it and reset styles
                 element.style.display = 'block';
+                element.style.position = ''; // Reset the position of the element
                 article.style.width = ''; // Reset the width of the article
                 button.innerText = '-';
             } else {
-                element.style.display = 'none';
-                article.style.width = '100%'; // Increase the width of the article
+                // If the sidebar is visible, hide it and adjust styles
+                element.style.setProperty('display', 'none', 'important');
+                element.style.setProperty('position', 'static', 'important');
+                article.style.setProperty('width', '100%', 'important');
                 button.innerText = '+';
             }
         });
+        // Append the button to the document body
         document.body.appendChild(button);
     }
 
+    // Get the current hostname from the window location
     const currentHostname = window.location.hostname;
+    // Filter the collapsible elements for the current website
     const currentCollapsibleElements = collapsibleElements.filter(
         (element) => currentHostname.includes(element.hostname)
     );
+    // For each collapsible element, add a button to toggle its display
     currentCollapsibleElements.forEach((element) => {
         const el = document.querySelector(element.selector);
         const article = document.querySelector(element.articleSelector);
